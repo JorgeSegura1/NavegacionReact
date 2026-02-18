@@ -1,91 +1,65 @@
 import React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 
-const ProfileScreen = ({ route, navigation }) => {
-  const { username } = route.params || {};
+export default function ProfileScreen({ navigation, route }) {
+  // recibir params enviados desde Details o Home
+  const { usuario, itemFavorito } = route.params || {};
 
   return (
     <View style={styles.container}>
-      <View style={styles.profileBox}>
-        <Text style={styles.title}>Pantalla de Perfil</Text>
-        <Text style={styles.usernameLabel}>Usuario:</Text>
-        <Text style={styles.username}>{username || 'No definido'}</Text>
-        <Text style={styles.sectionTitle}>Lo que espero de la materia:</Text>
-        <Text style={styles.sectionText}>
-          Espero profundizar en el desarrollo de aplicaciones móviles modernas, aprender buenas prácticas y dominar herramientas como React Native para crear apps eficientes y atractivas.
-        </Text>
-        <Text style={styles.sectionTitle}>Lo que me gustaría aprender:</Text>
-        <Text style={styles.sectionText}>
-          Me gustaría entender las falacias comunes en la programación con React, cómo evitarlas y cómo adaptar correctamente proyectos web a plataformas móviles, aprovechando al máximo el potencial de React Native.
-        </Text>
+      <View style={styles.card}>
+        <Text style={styles.title}>Perfil</Text>
+
+        <Text style={styles.label}>Usuario:</Text>
+        <Text style={styles.value}>{usuario ?? 'No definido'}</Text>
+
+        <Text style={styles.label}>Item favorito:</Text>
+        <Text style={styles.value}>{itemFavorito ?? 'No definido'}</Text>
+
+        <View style={{ height: 14 }} />
+
         <View style={styles.buttonGroup}>
-          <Button
-            title="Ir a Home"
-            color="#2196F3"
-            onPress={() => navigation.navigate('Home', { saludo: '¡Hola desde Perfil!' })}
-          />
-          <View style={{ height: 10 }} />
-          <Button
-            title="Ir a Detalles"
-            color="#4CAF50"
-            onPress={() => navigation.navigate('Details', { info: 'Perfil a Detalles' })}
-          />
+          <Button title="Volver a Home" onPress={() => navigation.popToTop()} />
+          <View style={{ height: 8 }} />
+          <Button title="Ir a Detalles" onPress={() => navigation.navigate('Details', { itemId: 202, titulo: 'Desde Perfil', autor: usuario ?? 'Anon' })} />
         </View>
       </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#fff7ee',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f5f6fa',
+    padding: 16,
   },
-  profileBox: {
+  card: {
+    width: '90%',
     backgroundColor: '#fff',
-    borderRadius: 16,
-    padding: 32,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 8,
-    elevation: 4,
-    alignItems: 'center',
-    minWidth: 280,
+    borderRadius: 12,
+    padding: 20,
+    elevation: 5,
   },
   title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    marginBottom: 16,
-    color: '#222',
-  },
-  usernameLabel: {
-    fontSize: 18,
-    color: '#888',
-    marginBottom: 4,
-  },
-  username: {
-    fontSize: 22,
-    fontWeight: '600',
-    color: '#2196F3',
-    marginBottom: 24,
-  },
-  sectionTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 24,
+    fontWeight: '700',
+    color: '#b35400',
     marginBottom: 8,
+  },
+  label: {
+    fontSize: 14,
+    color: '#777',
+    marginTop: 8,
+  },
+  value: {
+    fontSize: 18,
+    fontWeight: '600',
     color: '#333',
   },
-  sectionText: {
-    fontSize: 16,
-    color: '#555',
-    marginBottom: 16,
-  },
   buttonGroup: {
-    width: '100%',
+    marginTop: 12,
   },
 });
-
-export default ProfileScreen;

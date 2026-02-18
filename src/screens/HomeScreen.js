@@ -1,62 +1,69 @@
 import React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 
-export default function HomeScreen({ navigation, route }) {
-    const saludo = route?.params?.saludo;
-    return (
-        <View style={styles.container}>
-            <View style={styles.box}>
-                <Text style={styles.title}>Pantalla Home</Text>
-                {saludo && <Text style={styles.subtitle}>{saludo}</Text>}
-                <View style={styles.buttonGroup}>
-                    <Button
-                        title="IR A DETALLES CON INFO"
-                        color="#2196F3"
-                        onPress={() => navigation.navigate('Details', { info: 'Home a Detalles' })}
-                    />
-                    <View style={{ height: 10 }} />
-                    <Button
-                        title="IR A PERFIL"
-                        color="#4CAF50"
-                        onPress={() => navigation.navigate('Profile', { username: 'usuario123' })}
-                    />
-                </View>
-            </View>
+export default function HomeScreen({ navigation }) {
+  return (
+    <View style={styles.container}>
+      <View style={styles.card}>
+        <Text style={styles.title}>Pantalla Home</Text>
+        <Text style={styles.subtitle}>Listado de artículos</Text>
+
+        <View style={styles.buttonGroup}>
+          <Button
+            title="Ir a Detalles (con params)"
+            onPress={() =>
+              navigation.navigate('Details', {
+                itemId: 101,
+                titulo: 'Articulo 101',
+                autor: 'Equipo 3',
+              })
+            }
+          />
+          <View style={{ height: 10 }} />
+
+          <Button
+            title="Ir a Perfil (directo)"
+            onPress={() =>
+              navigation.navigate('Profile', {
+                usuario: 'Jorge Isaac',
+                itemFavorito: 'Articulo 99',
+              })
+            }
+          />
         </View>
-    );
+      </View>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#f5f6fa',
-    },
-    box: {
-        backgroundColor: '#fff',
-        borderRadius: 16,
-        padding: 32,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.2,
-        shadowRadius: 8,
-        elevation: 4,
-        alignItems: 'center',
-        minWidth: 280,
-    },
-    title: {
-        fontSize: 28,
-        fontWeight: 'bold',
-        marginBottom: 16,
-        color: '#222',
-    },
-    subtitle: {
-        fontSize: 18,
-        color: '#2196F3',
-        marginBottom: 16,
-    },
-    buttonGroup: {
-        width: '100%',
-    },
+  container: {
+    flex: 1,
+    backgroundColor: '#f5f6fa',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 16,
+  },
+  card: {
+    width: '90%',
+    backgroundColor: '#fff',
+    borderRadius: 14,
+    padding: 20,
+    elevation: 6,
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 26,
+    fontWeight: '700',
+    color: '#222',
+    marginBottom: 8,
+  },
+  subtitle: {
+    fontSize: 16,
+    color: '#4A90E2',
+    marginBottom: 16,
+  },
+  buttonGroup: {
+    width: '100%',
+  },
 });

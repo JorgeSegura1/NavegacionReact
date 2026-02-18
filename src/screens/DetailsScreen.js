@@ -2,61 +2,75 @@ import React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 
 export default function DetailsScreen({ navigation, route }) {
-    const info = route?.params?.info;
-    return (
-        <View style={styles.container}>
-            <View style={styles.box}>
-                <Text style={styles.title}>Pantalla Detalles</Text>
-                {info && <Text style={styles.subtitle}>{info}</Text>}
-                <View style={styles.buttonGroup}>
-                    <Button
-                        title="IR A INICIO"
-                        color="#2196F3"
-                        onPress={() => navigation.navigate('Home', { saludo: '¡Hola desde Detalles!' })}
-                    />
-                    <View style={{ height: 10 }} />
-                    <Button
-                        title="IR A PERFIL"
-                        color="#4CAF50"
-                        onPress={() => navigation.navigate('Profile', { username: 'detallesUser' })}
-                    />
-                </View>
-            </View>
+  // leer params enviados desde Home (o desde otra pantalla)
+  const { itemId, titulo, autor } = route.params || {};
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.card}>
+        <Text style={styles.title}>Detalles</Text>
+
+        <Text style={styles.label}>ID:</Text>
+        <Text style={styles.value}>{itemId ?? 'No definido'}</Text>
+
+        <Text style={styles.label}>Título:</Text>
+        <Text style={styles.value}>{titulo ?? 'No definido'}</Text>
+
+        <Text style={styles.label}>Autor:</Text>
+        <Text style={styles.value}>{autor ?? 'No definido'}</Text>
+
+        <View style={{ height: 12 }} />
+
+        <View style={styles.buttonGroup}>
+          <Button
+            title="Ir a Perfil (con params desde Details)"
+            onPress={() =>
+              navigation.navigate('Profile', {
+                usuario: autor ?? 'Autor desconocido',
+                itemFavorito: titulo ?? 'Artículo desconocido',
+              })
+            }
+          />
+          <View style={{ height: 8 }} />
+          <Button title="Volver" onPress={() => navigation.goBack()} />
         </View>
-    );
+      </View>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#f5f6fa',
-    },
-    box: {
-        backgroundColor: '#fff',
-        borderRadius: 16,
-        padding: 32,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.2,
-        shadowRadius: 8,
-        elevation: 4,
-        alignItems: 'center',
-        minWidth: 280,
-    },
-    title: {
-        fontSize: 28,
-        fontWeight: 'bold',
-        marginBottom: 16,
-        color: '#222',
-    },
-    subtitle: {
-        fontSize: 18,
-        color: '#4CAF50',
-        marginBottom: 16,
-    },
-    buttonGroup: {
-        width: '100%',
-    },
+  container: {
+    flex: 1,
+    backgroundColor: '#eef7f6',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 16,
+  },
+  card: {
+    width: '90%',
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    padding: 20,
+    elevation: 4,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: '700',
+    color: '#0b6b63',
+    marginBottom: 12,
+  },
+  label: {
+    fontSize: 14,
+    color: '#666',
+    marginTop: 6,
+  },
+  value: {
+    fontSize: 18,
+    color: '#222',
+    fontWeight: '600',
+  },
+  buttonGroup: {
+    marginTop: 12,
+  },
 });
